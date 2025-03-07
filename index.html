@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Three.js Rotating Cube</title>
+    <title>Three.js Twin Cubes with Stems</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <style>
@@ -20,14 +20,36 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
-        // Add Cube
-        const geometry = new THREE.BoxGeometry();
-        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
-        const cube = new THREE.Mesh(geometry, material);
-        scene.add(cube);
+        // Create Materials
+        const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: false }); // Red cubes
+        const stemMaterial = new THREE.MeshBasicMaterial({ color: 0x8b4513, wireframe: false }); // Brown stems
+
+        // Create Two Cubes
+        const geometry = new THREE.BoxGeometry(1, 1, 1);
+        const cube1 = new THREE.Mesh(geometry, cubeMaterial);
+        const cube2 = new THREE.Mesh(geometry, cubeMaterial);
+
+        // Position the Cubes
+        cube1.position.set(-1.2, 0, 0);
+        cube2.position.set(1.2, 0, 0);
+
+        scene.add(cube1);
+        scene.add(cube2);
+
+        // Create Stems (Thin Cubes)
+        const stemGeometry = new THREE.BoxGeometry(0.2, 1.5, 0.2);
+        const stem1 = new THREE.Mesh(stemGeometry, stemMaterial);
+        const stem2 = new THREE.Mesh(stemGeometry, stemMaterial);
+
+        // Position the Stems on Top of the Cubes
+        stem1.position.set(-1.2, 1, 0);
+        stem2.position.set(1.2, 1, 0);
+
+        scene.add(stem1);
+        scene.add(stem2);
 
         // Position Camera
-        camera.position.z = 3;
+        camera.position.z = 5;
 
         // Add Controls
         const controls = new THREE.OrbitControls(camera, renderer.domElement);
